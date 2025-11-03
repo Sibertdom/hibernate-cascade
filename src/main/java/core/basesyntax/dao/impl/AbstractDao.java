@@ -1,12 +1,12 @@
 package core.basesyntax.dao.impl;
 
 import core.basesyntax.dao.GenericDao;
+import java.lang.reflect.ParameterizedType;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.lang.reflect.ParameterizedType;
-import java.util.List;
 
 public abstract class AbstractDao<T> implements GenericDao<T> {
     protected final SessionFactory factory;
@@ -29,14 +29,17 @@ public abstract class AbstractDao<T> implements GenericDao<T> {
             transaction.commit();
             return entity;
         } catch (Exception e) {
-            System.err.println("--- ПОБАЧЕНО ПЕРВИННИЙ ВИНЯТОК: " + e.getClass().getName() + " ---");
+            System.err.println("--- ПОБАЧЕНО ПЕРВИННИЙ ВИНЯТОК: "
+                    + e.getClass().getName() + " ---");
             e.printStackTrace();
-            System.err.println("------------------------------------------------------------------");
+            System.err.println("------------------------------" +
+                    "------------------------------------");
 
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can't create entity: " + entityClass.getSimpleName(), e);
+            throw new RuntimeException("Can't create entity: "
+                    + entityClass.getSimpleName(), e);
         }
     }
 
@@ -52,10 +55,12 @@ public abstract class AbstractDao<T> implements GenericDao<T> {
     @Override
     public List<T> getAll() {
         try (Session session = factory.openSession()) {
-            Query<T> query = session.createQuery("from " + entityClass.getSimpleName(), entityClass);
+            Query<T> query = session.createQuery("from "
+                    + entityClass.getSimpleName(), entityClass);
             return query.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get all entities: " + entityClass.getSimpleName(), e);
+            throw new RuntimeException("Can't get all entities: "
+                    + entityClass.getSimpleName(), e);
         }
     }
 }

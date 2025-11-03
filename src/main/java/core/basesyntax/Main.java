@@ -1,18 +1,30 @@
 package core.basesyntax;
 
-import core.basesyntax.dao.impl.*;
-import core.basesyntax.model.*;
-import core.basesyntax.HibernateUtil;
+import core.basesyntax.dao.impl.CommentDaoImpl;
+import core.basesyntax.dao.impl.MessageDaoImpl;
+import core.basesyntax.dao.impl.MessageDetailsDaoImpl;
+import core.basesyntax.dao.impl.SmileDaoImpl;
+import core.basesyntax.dao.impl.UserDaoImpl;
+import core.basesyntax.model.Comment;
+import core.basesyntax.model.Message;
+import core.basesyntax.model.MessageDetails;
+import core.basesyntax.model.Smile;
+import core.basesyntax.model.User;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 
 public class Main {
-    private static final UserDaoImpl userDao = new UserDaoImpl(core.basesyntax.HibernateUtil.getSessionFactory());
-    private static final CommentDaoImpl commentDao = new CommentDaoImpl(core.basesyntax.HibernateUtil.getSessionFactory());
-    private static final MessageDaoImpl messageDao = new MessageDaoImpl(core.basesyntax.HibernateUtil.getSessionFactory());
-    private static final SmileDaoImpl smileDao = new SmileDaoImpl(core.basesyntax.HibernateUtil.getSessionFactory());
-    private static final MessageDetailsDaoImpl messageDetailsDao = new MessageDetailsDaoImpl(core.basesyntax.HibernateUtil.getSessionFactory());
+    private static final UserDaoImpl userDao = new UserDaoImpl(
+            core.basesyntax.HibernateUtil.getSessionFactory());
+    private static final CommentDaoImpl commentDao = new CommentDaoImpl(
+            core.basesyntax.HibernateUtil.getSessionFactory());
+    private static final MessageDaoImpl messageDao = new MessageDaoImpl(
+            core.basesyntax.HibernateUtil.getSessionFactory());
+    private static final SmileDaoImpl smileDao = new SmileDaoImpl(
+            core.basesyntax.HibernateUtil.getSessionFactory());
+    private static final MessageDetailsDaoImpl messageDetailsDao = new MessageDetailsDaoImpl(
+            core.basesyntax.HibernateUtil.getSessionFactory());
 
 
     public static void main(String[] args) {
@@ -45,7 +57,8 @@ public class Main {
         newUser.getComments().add(c2);
 
         userDao.create(newUser);
-        System.out.println("1. Створено User та 2 Comment (через PERSIST). User ID: " + newUser.getId());
+        System.out.println("1. Створено User та 2 Comment (через PERSIST). User ID: "
+                + newUser.getId());
         System.out.println("   Comment IDs: " + c1.getId() + ", " + c2.getId());
 
         userDao.remove(newUser);
@@ -54,8 +67,10 @@ public class Main {
         Comment foundC1 = commentDao.get(c1.getId());
         Comment foundC2 = commentDao.get(c2.getId());
 
-        String c1User = foundC1 != null && foundC1.getUser() == null ? "NULL (OK)" : "N/A";
-        String c2User = foundC2 != null && foundC2.getUser() == null ? "NULL (OK)" : "N/A";
+        String c1User = foundC1 != null && foundC1.getUser() == null
+                ? "NULL (OK)" : "N/A";
+        String c2User = foundC2 != null && foundC2.getUser() == null
+                ? "NULL (OK)" : "N/A";
 
         System.out.println("   C1 існує? " + (foundC1 != null) + ". User: " + c1User);
         System.out.println("   C2 існує? " + (foundC2 != null) + ". User: " + c2User);
@@ -103,8 +118,8 @@ public class Main {
 
         messageDao.create(message);
         Long detailsId = details.getId();
-        System.out.println("1. Створено Message та Details (через ALL). Message ID: " + message.getId()
-                + ", Details ID: " + detailsId);
+        System.out.println("1. Створено Message та Details (через ALL). Message ID: "
+                + message.getId() + ", Details ID: " + detailsId);
 
         messageDao.remove(message);
         System.out.println("2. Видалено Message. Перевірка Details...");
