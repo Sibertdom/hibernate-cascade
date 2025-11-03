@@ -31,4 +31,3 @@ public class SmileDaoImpl extends AbstractDao<Smile> implements SmileDao {
         }
     }
 }
-

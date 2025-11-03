@@ -29,7 +29,6 @@ public class Comment {
     @JoinColumn(
             name = "user_id",
             nullable = true,
-            // ВИПРАВЛЕННЯ: Додано ON DELETE SET NULL для уникнення SQLIntegrityConstraintViolationException
             foreignKey = @ForeignKey(
                     value = ConstraintMode.CONSTRAINT,
                     foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL"
@@ -53,8 +52,6 @@ public class Comment {
     public Comment(String text) {
         this.text = text;
     }
-
-    // --- Getters and Setters ---
 
     public Long getId() {
         return id;

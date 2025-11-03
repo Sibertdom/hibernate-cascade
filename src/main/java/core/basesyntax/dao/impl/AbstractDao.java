@@ -29,13 +29,11 @@ public abstract class AbstractDao<T> implements GenericDao<T> {
             transaction.commit();
             return entity;
         } catch (Exception e) {
-            // !!! ВИНЯТОК: Додано повне виведення стека для діагностики першопричини
             System.err.println("--- ПОБАЧЕНО ПЕРВИННИЙ ВИНЯТОК: " + e.getClass().getName() + " ---");
             e.printStackTrace();
             System.err.println("------------------------------------------------------------------");
 
             if (transaction != null) {
-                // Саме тут раніше виникала IllegalStateException: is closed
                 transaction.rollback();
             }
             throw new RuntimeException("Can't create entity: " + entityClass.getSimpleName(), e);
