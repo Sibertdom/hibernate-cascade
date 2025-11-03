@@ -11,8 +11,8 @@ import core.basesyntax.model.MessageDetails;
 import core.basesyntax.model.Smile;
 import core.basesyntax.model.User;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
+// HashSet більше не потрібен
 
 public class Main {
     private static final UserDaoImpl userDao = new UserDaoImpl(
@@ -25,6 +25,7 @@ public class Main {
             core.basesyntax.HibernateUtil.getSessionFactory());
     private static final MessageDetailsDaoImpl messageDetailsDao = new MessageDetailsDaoImpl(
             core.basesyntax.HibernateUtil.getSessionFactory());
+
 
     public static void main(String[] args) {
         System.out.println("--- Запуск тестування Hibernate Cascades ---");
@@ -45,11 +46,13 @@ public class Main {
         newUser.setUsername("JohnDoe");
 
         Comment c1 = new Comment();
-        c1.setText("Чудовий пост!");
+        // ВИПРАВЛЕНО: setText() -> setContent()
+        c1.setContent("Чудовий пост!");
         c1.setUser(newUser);
 
         Comment c2 = new Comment();
-        c2.setText("Дякую за інформацію.");
+        // ВИПРАВЛЕНО: setText() -> setContent()
+        c2.setContent("Дякую за інформацію.");
         c2.setUser(newUser);
 
         newUser.getComments().add(c1);
@@ -84,8 +87,11 @@ public class Main {
                 + " (ID: " + existingSmile.getId() + ")");
 
         Comment newComment = new Comment();
-        newComment.setText("Коментар зі смайлом.");
-        newComment.setSmiles(new HashSet<>(List.of(existingSmile)));
+        // ВИПРАВЛЕНО: setText() -> setContent()
+        newComment.setContent("Коментар зі смайлом.");
+
+        // ВИПРАВЛЕНО: видалено new HashSet<>() (тому що smiles тепер List)
+        newComment.setSmiles(List.of(existingSmile));
 
         commentDao.create(newComment);
         System.out.println("2. Створено Comment: " + newComment.getId() + " з існуючим Smile.");
