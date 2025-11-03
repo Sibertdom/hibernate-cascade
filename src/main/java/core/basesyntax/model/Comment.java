@@ -1,10 +1,10 @@
 package core.basesyntax.model;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.ConstraintMode; // Доданий імпорт
+import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey; // Доданий імпорт
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,8 +13,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "comments")
@@ -23,7 +23,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String text;
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -31,7 +31,7 @@ public class Comment {
             nullable = true,
             foreignKey = @ForeignKey(
                     value = ConstraintMode.CONSTRAINT,
-                    foreignKeyDefinition = "FOREIGN KEY (user_id) "
+                    foreignKeyDefinition = "FOREIGN KEY (user_id)"
                             + "REFERENCES users (id) ON DELETE SET NULL"
             )
     )
@@ -45,13 +45,13 @@ public class Comment {
             joinColumns = @JoinColumn(name = "comment_id"),
             inverseJoinColumns = @JoinColumn(name = "smile_id")
     )
-    private Set<Smile> smiles = new HashSet<>();
+    private List<Smile> smiles = new ArrayList<>();
 
     public Comment() {
     }
 
-    public Comment(String text) {
-        this.text = text;
+    public Comment(String content) {
+        this.content = content;
     }
 
     public Long getId() {
@@ -62,19 +62,19 @@ public class Comment {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Set<Smile> getSmiles() {
+    public List<Smile> getSmiles() {
         return smiles;
     }
 
-    public void setSmiles(Set<Smile> smiles) {
+    public void setSmiles(List<Smile> smiles) {
         this.smiles = smiles;
     }
 
