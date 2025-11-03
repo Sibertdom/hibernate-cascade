@@ -26,7 +26,6 @@ public class Main {
     private static final MessageDetailsDaoImpl messageDetailsDao = new MessageDetailsDaoImpl(
             core.basesyntax.HibernateUtil.getSessionFactory());
 
-
     public static void main(String[] args) {
         System.out.println("--- Запуск тестування Hibernate Cascades ---");
 
