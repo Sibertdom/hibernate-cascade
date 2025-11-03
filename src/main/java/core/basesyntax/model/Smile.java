@@ -1,13 +1,12 @@
 package core.basesyntax.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne; // ✅ Змінено на ManyToOne
 import jakarta.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "smiles")
@@ -17,8 +16,10 @@ public class Smile {
     private Long id;
     private String value;
 
-    @ManyToMany(mappedBy = "smiles")
-    private Set<Comment> comments = new HashSet<>();
+    // ✅ Змінено з ManyToMany: Smile тепер є залежною стороною у зв'язку ManyToOne.
+    // FK (зовнішній ключ) буде знаходитися в таблиці smiles і посилатися на Comment.
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Comment comment;
 
     public Smile() {
     }
@@ -43,12 +44,12 @@ public class Smile {
         this.value = value;
     }
 
-    public Set<Comment> getComments() {
-        return comments;
+    public Comment getComment() {
+        return comment;
     }
 
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 
     @Override

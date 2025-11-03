@@ -1,17 +1,13 @@
 package core.basesyntax.model;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,25 +22,10 @@ public class Comment {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "user_id",
-            nullable = true,
-            foreignKey = @ForeignKey(
-                    value = ConstraintMode.CONSTRAINT,
-                    foreignKeyDefinition = "FOREIGN KEY (user_id)"
-                            + "REFERENCES users (id) ON DELETE SET NULL"
-            )
-    )
+
     private User user;
 
-    @ManyToMany(cascade = {
-            CascadeType.MERGE
-    })
-    @JoinTable(
-            name = "comments_smiles",
-            joinColumns = @JoinColumn(name = "comment_id"),
-            inverseJoinColumns = @JoinColumn(name = "smile_id")
-    )
+    @OneToMany(mappedBy = "comment", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Smile> smiles = new ArrayList<>();
 
     public Comment() {
