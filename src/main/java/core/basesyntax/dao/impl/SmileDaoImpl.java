@@ -2,26 +2,33 @@ package core.basesyntax.dao.impl;
 
 import core.basesyntax.dao.SmileDao;
 import core.basesyntax.model.Smile;
-import java.util.List;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import java.util.List;
 
-public class SmileDaoImpl extends AbstractDao implements SmileDao {
+public class SmileDaoImpl extends AbstractDao<Smile> implements SmileDao {
+
     public SmileDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
-    @Override
-    public Smile create(Smile entity) {
-        return null;
-    }
 
     @Override
-    public Smile get(Long id) {
-        return null;
-    }
+    public void remove(Smile entity) {
+        Transaction transaction = null;
+        try (Session session = factory.openSession()) {
+            transaction = session.beginTransaction();
 
-    @Override
-    public List<Smile> getAll() {
-        return null;
+            session.remove(session.merge(entity));
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new RuntimeException("Can't remove Smile " + entity, e);
+        }
     }
 }
+
