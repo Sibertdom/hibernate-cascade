@@ -2,10 +2,10 @@ package core.basesyntax.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -17,8 +17,11 @@ public class Message {
     private Long id;
     private String content;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "details_id", referencedColumnName = "id")
+    // ✅ OneToOne зв'язок з MessageDetails.
+    // mappedBy = "message" вказує, що MessageDetails відповідає за колонку зв'язку.
+    // CascadeType.ALL, щоб MessageDetails зберігався/видалявся разом з Message.
+    @OneToOne(mappedBy = "message", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, orphanRemoval = true)
     private MessageDetails messageDetails;
 
     public Long getId() {
@@ -43,5 +46,9 @@ public class Message {
 
     public void setMessageDetails(MessageDetails messageDetails) {
         this.messageDetails = messageDetails;
+        // 💡 Додатково: Встановлюємо двосторонній зв'язок
+        if (messageDetails != null) {
+            messageDetails.setMessage(this);
+        }
     }
 }

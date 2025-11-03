@@ -45,12 +45,10 @@ public class Main {
         newUser.setUsername("JohnDoe");
 
         Comment c1 = new Comment();
-        // ВИПРАВЛЕНО: setText() -> setContent()
         c1.setContent("Чудовий пост!");
         c1.setUser(newUser);
 
         Comment c2 = new Comment();
-        // ВИПРАВЛЕНО: setText() -> setContent()
         c2.setContent("Дякую за інформацію.");
         c2.setUser(newUser);
 
@@ -86,10 +84,8 @@ public class Main {
                 + " (ID: " + existingSmile.getId() + ")");
 
         Comment newComment = new Comment();
-        // ВИПРАВЛЕНО: setText() -> setContent()
         newComment.setContent("Коментар зі смайлом.");
 
-        // ВИПРАВЛЕНО: видалено new HashSet<>() (тому що smiles тепер List)
         newComment.setSmiles(List.of(existingSmile));
 
         commentDao.create(newComment);
