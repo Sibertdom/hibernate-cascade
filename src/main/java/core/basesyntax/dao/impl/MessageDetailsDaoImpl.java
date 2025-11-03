@@ -5,10 +5,9 @@ import core.basesyntax.model.MessageDetails;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import java.util.List;
-import org.hibernate.query.Query;
 
-public class MessageDetailsDaoImpl extends AbstractDao<MessageDetails> implements MessageDetailsDao {
+public class MessageDetailsDaoImpl extends AbstractDao<MessageDetails>
+        implements MessageDetailsDao {
 
     public MessageDetailsDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);

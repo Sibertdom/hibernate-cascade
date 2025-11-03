@@ -31,8 +31,8 @@ public class Comment {
             nullable = true,
             foreignKey = @ForeignKey(
                     value = ConstraintMode.CONSTRAINT,
-                    foreignKeyDefinition = "FOREIGN KEY (user_id) " +
-                            "REFERENCES users (id) ON DELETE SET NULL"
+                    foreignKeyDefinition = "FOREIGN KEY (user_id) "
+                            + "REFERENCES users (id) ON DELETE SET NULL"
             )
     )
     private User user;

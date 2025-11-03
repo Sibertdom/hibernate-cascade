@@ -32,8 +32,8 @@ public abstract class AbstractDao<T> implements GenericDao<T> {
             System.err.println("--- ПОБАЧЕНО ПЕРВИННИЙ ВИНЯТОК: "
                     + e.getClass().getName() + " ---");
             e.printStackTrace();
-            System.err.println("------------------------------" +
-                    "------------------------------------");
+            System.err.println("------------------------------"
+                    + "------------------------------------");
 
             if (transaction != null) {
                 transaction.rollback();

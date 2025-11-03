@@ -5,15 +5,12 @@ import core.basesyntax.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import java.util.List;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     public UserDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
-
 
     @Override
     public void remove(User user) {

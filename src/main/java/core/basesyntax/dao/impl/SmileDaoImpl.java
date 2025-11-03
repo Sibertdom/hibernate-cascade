@@ -5,14 +5,12 @@ import core.basesyntax.model.Smile;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import java.util.List;
 
 public class SmileDaoImpl extends AbstractDao<Smile> implements SmileDao {
 
     public SmileDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
-
 
     @Override
     public void remove(Smile entity) {
